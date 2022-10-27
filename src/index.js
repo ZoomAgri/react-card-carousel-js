@@ -273,7 +273,7 @@ module.exports = (function (e) {
                 autoplay: !1,
                 autoplay_speed: 5e3,
                 top_child: '50%',
-                translate_y_child : '50%',
+                translate_y_child : '-50%',
                 afterChange: function () {
                 },
             }),
