@@ -164,7 +164,7 @@ module.exports = (function (e) {
                             let e = n.props,
                                 t = e.alignment,
                                 o = e.spread,
-                                a = e.disable_box_shadow;
+                                a = e.disable_box_shadow;                                
                             return i.default.Children.map(n.props.children, function (e, u) {
                                 let s = n._getCardClass(u);
                                 let f = n.props;
@@ -180,9 +180,10 @@ module.exports = (function (e) {
                                             userSelect: ("none", l.getUserSelect)(s),
                                             opacity: (0, l.getOpacity)(s, f),
                                             zIndex: (0, l.getZIndex)(s),
-                                            transform: (0, l.getTransform)(s, t, o),
+                                            transform: (0, l.getTransform)(s, t, o, f),
                                             boxShadow: (0, l.getBoxShadow)(s, t, a),
                                             cursor: (0, l.getCursor)(s, t, f),
+                                            top: f.top_child || l.STYLES.CARD.top
                                         }),
                                     },
                                     e
@@ -255,6 +256,8 @@ module.exports = (function (e) {
             autoplay: u.default.bool,
             autoplay_speed: u.default.number,
             afterChange: u.default.func,
+            top_child: u.default.string,
+            translate_y_child : u.default.string
         }),
             (f.defaultProps = {
                 alignment: s.ALIGNMENT.HORIZONTAL,
@@ -269,6 +272,8 @@ module.exports = (function (e) {
                 hide_last_card: !1,
                 autoplay: !1,
                 autoplay_speed: 5e3,
+                top_child: '50%',
+                translate_y_child : '50%',
                 afterChange: function () {
                 },
             }),
@@ -346,7 +351,7 @@ module.exports = (function (e) {
             (t.getZIndex = function (e) {
                 return e === r.POSITION.HIDDEN ? 0 : e === r.POSITION.CURRENT ? 2 : 1;
             }),
-            (t.getTransform = function (e, t, n) {
+            (t.getTransform = function (e, t, n, f) {
                 let o = (function (e) {
                         let t = void 0,
                             n = void 0;
@@ -356,14 +361,14 @@ module.exports = (function (e) {
                     a = o.prev,
                     i = o.next;
                 if (t === r.ALIGNMENT.HORIZONTAL) {
-                    if (e === r.POSITION.PREV) return "translate(" + a + ", -50%) scale(0.82)";
-                    if (e === r.POSITION.NEXT) return "translate(" + i + ", -50%) scale(0.82)";
+                    if (e === r.POSITION.PREV) return "translate(" + a + ", " + f.translate_y_child + ") scale(0.82)";
+                    if (e === r.POSITION.NEXT) return "translate(" + i + ", " + f.translate_y_child + ") scale(0.82)";
                 }
                 if (t === r.ALIGNMENT.VERTICAL) {
                     if (e === r.POSITION.PREV) return "translate(-50%, " + a + ") scale(0.82)";
                     if (e === r.POSITION.NEXT) return "translate(-50%, " + i + ") scale(0.82)";
                 }
-                return e === r.POSITION.HIDDEN ? "translate(-50%, -50%) scale(0.5)" : "translate(-50%, -50%)";
+                return e === r.POSITION.HIDDEN ? "translate(-50%, -50%) scale(0.5)" : "translate(-50%, " + f.translate_y_child + ")";
             }),
             (t.getBoxShadow = function (e, t, n) {
                 if (!n && e === r.POSITION.CURRENT) {
